@@ -10,62 +10,66 @@ import Button from '@material-ui/core/Button';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 class ListResourcesComponent extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            users: [],
+            resources: [],
             message: null
         }
-        this.deleteUser = this.deleteUser.bind(this);
-        this.editUser = this.editUser.bind(this);
-        this.addUser = this.addUser.bind(this);
-        this.reloadUserList = this.reloadUserList.bind(this);
+        this.deleteResource = this.deleteResource.bind(this);
+        this.editResource = this.editResource.bind(this);
+        this.addResource = this.addResource.bind(this);
+        this.reloadResourceList = this.reloadResourceList.bind(this);
     }
 
     componentDidMount() {
-        this.reloadUserList();
+        this.reloadResourceList();
     }
 
-    reloadUserList() {
-        ApiService.fetchUsers()
+    reloadResourceList() {
+        ApiService.fetchResources()
             .then((res) => {
-                this.setState({users: res.data})
+                this.setState({ resources: res.data })
+                //this.setState({resources: res.data.result}) //на бэке api service, где собирается JSON
             });
-            console.log(this.state);
+        console.log(this.state);
     }
 
-    deleteUser(userId) {
-        ApiService.deleteUser(userId)
-           .then(res => {
-               this.setState({message : 'User deleted successfully.'});
-               this.setState({users: this.state.users.filter(user => user.id !== userId)});
-           })
+    deleteResource(resourceId) {
+        ApiService.deleteResource(resourceId)
+            .then(res => {
+                this.setState({ message: 'Resource deleted successfully.' });
+                this.setState({ resources: this.state.resources.filter(resource => resource.id !== resourceId) });
+            })
     }
 
-    editUser(id) {
-        window.localStorage.setItem("userId", id);
-        this.props.history.push('/edit-user');
+    editResource(id) {
+        window.localStorage.setItem("resourceId", id);
+        this.props.history.push('/edit-resource');
     }
 
-    addUser() {
-        window.localStorage.removeItem("userId");
+    addResource() {
+        window.localStorage.removeItem("resourceId");
         this.props.history.push('/add-resource');
 
     }
 
     render() {
         const containerStyle = {
-            width: '80%', 
-            margin: '50px auto 0', 
+            width: '80%',
+            margin: '50px auto 0',
         };
         return (
             <div style={containerStyle}>
                 <Typography variant="h4" style={style}>Исполнители</Typography>
-                <Button variant="contained" color="primary" onClick={() => this.addUser()}>
-                    Добавить
-                </Button>
+                <ThemeProvider theme={theme}>
+                    <Button variant="contained" color="primary" onClick={() => this.addResource()}>
+                        Добавить
+                    </Button>
+                </ThemeProvider>
 
                 <Table>
                     <TableHead>
@@ -78,15 +82,15 @@ class ListResourcesComponent extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.state.users?.map(row => (
+                        {this.state.resources?.map(row => (
                             <TableRow key={row.id}>
                                 <TableCell align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.capacity}</TableCell>
                                 <TableCell align="center">{row.occupancy}</TableCell>
                                 <TableCell align="center">{row.salary}</TableCell>
                                 <TableCell align="center">{row.totalCost}</TableCell>
-                                <TableCell align="center" onClick={() => this.editUser(row.id)}><CreateIcon /></TableCell>
-                                <TableCell align="center" onClick={() => this.deleteUser(row.id)}><DeleteIcon /></TableCell>
+                                <TableCell align="center" onClick={() => this.editResource(row.id)}><CreateIcon /></TableCell>
+                                <TableCell align="center" onClick={() => this.deleteResource(row.id)}><DeleteIcon /></TableCell>
 
                             </TableRow>
                         ))}
@@ -98,8 +102,15 @@ class ListResourcesComponent extends Component {
     }
 
 }
-
-const style ={
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#3db9d3',
+            contrastText: '#ffffff', // Используйте желаемый цвет текста
+        },
+    },
+});
+const style = {
     display: 'flex',
     justifyContent: 'center'
 }

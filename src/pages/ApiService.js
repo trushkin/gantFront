@@ -4,24 +4,24 @@ const RESOURCE_API_BASE_URL = 'http://localhost:8080/resources';
 
 class ApiService {
 
-    fetchUsers() {
+    fetchResources() {
         return axios.get(RESOURCE_API_BASE_URL);
     }
 
-    fetchUserById(userId) {
-        return axios.get(RESOURCE_API_BASE_URL + '/' + userId);
+    fetchResourcesById(resourceId) {
+        return axios.get(RESOURCE_API_BASE_URL + '/' + resourceId);
     }
 
-    deleteUser(userId) {
-        return axios.delete(RESOURCE_API_BASE_URL + '/' + userId);
+    deleteResource(resourceId) {
+        return axios.delete(RESOURCE_API_BASE_URL + '/' + resourceId);
     }
 
-    addUser(user) {
-        return axios.post(""+RESOURCE_API_BASE_URL, user);
+    addResource(resource) {
+        return axios.post(""+RESOURCE_API_BASE_URL, resource);
     }
 
-    editUser(user) {
-        return axios.put(RESOURCE_API_BASE_URL + '/' + user.id, user);
+    editResource(resource) {
+        return axios.put(RESOURCE_API_BASE_URL + '/' + resource.id, resource);
     }
 
 }

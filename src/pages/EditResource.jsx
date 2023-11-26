@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
-class AddResourceComponent extends Component {
+class EditResourceComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -16,28 +16,48 @@ class AddResourceComponent extends Component {
             salary: '',
             message: null
         }
-        this.saveResource = this.saveResource.bind(this);
+        // this.saveResource = this.saveResource.bind(this);
+        // this.loadResource = this.loadResource.bind(this);
     }
 
-    saveResource = (e) => {
-        e.preventDefault();
-        let resource = { username: this.state.username, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary };
-        ApiService.addResource(resource)
-            .then(res => {
-                this.setState({ message: 'Resource added successfully.' });
-                this.props.history.push('/resources');
-            });
-    }
+    // componentDidMount() {
+    //     this.loadResource();
+    // }
+
+    // loadResource() {
+    //     ApiService.fetchResourceById(window.localStorage.getItem("resourceId"))
+    //         .then((res) => {
+    //             let resource = res.data.result;
+    //             this.setState({
+    //                 id: resource.id,
+    //                 name: resource.name,
+    //                 capacity: resource.capacity,
+    //                 lastName: resource.lastName,
+    //                 age: resource.age,
+    //                 salary: resource.salary,
+    //             })
+    //         });
+    // }
 
     onChange = (e) =>
         this.setState({ [e.target.name]: e.target.value });
 
+    // saveUser = (e) => {
+    //     e.preventDefault();
+    //     let user = { id: this.state.id, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary };
+    //     ApiService.editUser(user)
+    //         .then(res => {
+    //             this.setState({ message: 'User added successfully.' });
+    //             this.props.history.push('/users');
+    //         });
+    // }
+
     render() {
         return (
-            <div style={containerStyle}>
+            <div  style={containerStyle}>
                 <ThemeProvider theme={theme}>
-                    <Typography variant="h4" style={style}>Добавление исполнителя</Typography>
-                    <form style={formContainer}>
+                    <Typography variant="h4" style={style}>Изменение данных исполнителя</Typography>
+                    <form>
 
                         <TextField type="text" placeholder="Имя" fullWidth margin="normal" name="name" value={this.state.name} onChange={this.onChange} />
 
@@ -45,10 +65,11 @@ class AddResourceComponent extends Component {
 
                         <TextField type="number" placeholder="Стоимость в день" fullWidth margin="normal" name="salary" inputProps={{ min: 0 }} value={this.state.salary} onChange={this.onChange} />
 
-                        <Button variant="contained" color="primary" onClick={this.saveResource}>Добавить</Button>
+                        <Button variant="contained" color="primary" onClick={this.saveUser}>Сохранить</Button>
+
                     </form>
                 </ThemeProvider>
-            </div >
+            </div>
         );
     }
 }
@@ -60,18 +81,14 @@ const theme = createTheme({
         },
     },
 });
-const formContainer = {
-    display: 'flex',
-    flexFlow: 'row wrap'
-};
 const style = {
     display: 'flex',
     justifyContent: 'center'
-
 }
+
 const containerStyle = {
     width: '40%',
     margin: '50px auto 0',
 };
 
-export default AddResourceComponent;
+export default EditResourceComponent;
