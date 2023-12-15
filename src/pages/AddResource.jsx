@@ -10,7 +10,6 @@ class AddResourceComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
             name: '',
             capacity: '',
             salary: '',
@@ -21,7 +20,7 @@ class AddResourceComponent extends Component {
 
     saveResource = (e) => {
         e.preventDefault();
-        let resource = { username: this.state.username, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary };
+        let resource = { username: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
         ApiService.addResource(resource)
             .then(res => {
                 this.setState({ message: 'Resource added successfully.' });
@@ -56,7 +55,7 @@ const theme = createTheme({
     palette: {
         primary: {
             main: '#3db9d3',
-            contrastText: '#ffffff', // Используйте желаемый цвет текста
+            contrastText: '#ffffff',
         },
     },
 });

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import axios from "axios";
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
-    
+
     const navigate = useNavigate();
-        
+
     const onButtonClick = () => {
         setEmailError("")
         setPasswordError("")
@@ -34,7 +35,30 @@ const Login = (props) => {
             setPasswordError("Пароль должен содержать не менее 7 символов")
             return
         }
-        navigate("/gantt")
+        axios.post('http://localhost:8080/login', {
+            email: email,
+            password: password
+        })
+            .then((res) => {
+                if(res.data === -1){
+                    console.log(res.data)
+                    setPasswordError("Неверный пароль")
+                    setEmailError("Неверный email")
+                } else{
+                    console.log(res.data.id)
+                    navigate("/gantt")
+                    console.log(res.data.id)
+                }
+                // this.props.history('/edit-resource');
+            })
+        // axios({
+        //     url: "http://localhost:8080/login",
+        //     method: "POST",
+        //   })
+        //     .then((res) => {
+
+        //     })
+        // navigate("/gantt")
     }
 
     return <div className={"mainContainer"}>
@@ -53,6 +77,7 @@ const Login = (props) => {
         <br />
         <div className={"inputContainer"}>
             <input
+            type="password"
                 value={password}
                 placeholder="Введите пароль"
                 onChange={ev => setPassword(ev.target.value)}

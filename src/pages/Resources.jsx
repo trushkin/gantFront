@@ -33,10 +33,9 @@ class ListResourcesComponent extends Component {
     reloadResourceList() {
         ApiService.fetchResources()
             .then((res) => {
-                this.setState({ resources: res.data })
+                this.setState({ resources: res.data.result, message: res.data.message })
                 //this.setState({resources: res.data.result}) //на бэке api service, где собирается JSON
             });
-        console.log(this.state);
     }
 
     deleteResource(resourceId) {
@@ -64,6 +63,7 @@ class ListResourcesComponent extends Component {
             width: '80%',
             margin: '50px auto 0',
         };
+        console.log(this.state);
         return (
             <div style={containerStyle}>
                 <Typography variant="h4" style={style}>Исполнители</Typography>

@@ -87,15 +87,18 @@ class GanttPage extends Component {
   componentDidMount() {
     this.loadData();
   }
-  saveGantt(){
-      console.log('сохраняю гант');
-      //this.state.data  отправить на сервер
+  saveGantt() {
+   // this.state.data;
+    console.log('сохраняю гант');
+    //console.log(data);
+    //this.state.data  отправить на сервер
   }
-  taskSave(task){
+  taskSave(task) {
     console.log('сохраняю таск');
     console.log(task);
     //обновить this.state.data 
   }
+  
   render() {
     // const { currentZoom, messages, data } = this.state;
     const { currentZoom, data } = this.state;
