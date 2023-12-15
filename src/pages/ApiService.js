@@ -4,12 +4,15 @@ const RESOURCE_API_BASE_URL = 'http://localhost:8080/resources';
 
 class ApiService {
 
-    fetchResources() {
-        return axios.get(RESOURCE_API_BASE_URL);
+    fetchResources(userId) {
+        return axios.get(RESOURCE_API_BASE_URL + '/' + userId);
     }
 
     fetchResourcesById(resourceId) {
         return axios.get(RESOURCE_API_BASE_URL + '/' + resourceId);
+    }
+    fetchResourcesToDropDown(userId){
+        return axios.get(RESOURCE_API_BASE_URL + '/resource-dropdown/' + userId);
     }
 
     deleteResource(resourceId) {

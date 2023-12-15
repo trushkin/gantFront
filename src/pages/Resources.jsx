@@ -13,13 +13,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 class ListResourcesComponent extends Component {
-
+    
     constructor(props) {
         super(props)
         this.state = {
             resources: [],
             message: null
         }
+        // this.userId = 4; //TEMP
         this.deleteResource = this.deleteResource.bind(this);
         this.editResource = this.editResource.bind(this);
         this.addResource = this.addResource.bind(this);
@@ -27,11 +28,11 @@ class ListResourcesComponent extends Component {
     }
 
     componentDidMount() {
-        this.reloadResourceList();
+        this.reloadResourceList(4);
     }
 
-    reloadResourceList() {
-        ApiService.fetchResources()
+    reloadResourceList(userId) {
+        ApiService.fetchResources(userId)
             .then((res) => {
                 this.setState({ resources: res.data.result, message: res.data.message })
                 //this.setState({resources: res.data.result}) //на бэке api service, где собирается JSON

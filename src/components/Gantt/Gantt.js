@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { gantt } from 'dhtmlx-gantt';
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
+import ApiService from "../../pages/ApiService";
 export default class Gantt extends Component {
 
   // instance of gantt.dataProcessor
   dataProcessor = null;
-
   initZoom() {
     gantt.i18n.setLocale("ru");
     gantt.config.columns = [
@@ -21,22 +21,29 @@ export default class Gantt extends Component {
       },
       { name: "add", width: 44 }
     ]
-    var owners = [
-      { key: "1", label: "Василий1" },
-      { key: "2", label: "Петр" },
-      { key: "3", label: "Ирина" }
-    ];
-    var priorities = [
-      { key: "Низкий", label: "Низкий" },
-      { key: "Средний", label: "Средний" },
-      { key: "Высокий", label: "Высокий" }
-    ];
-    gantt.config.lightbox.sections = [
-      { name: "description", height: 38, map_to: "text", type: "textarea", focus: true },
-      { name: "owner", height: 22, map_to: "owner", type: "select", options: owners },
-      { name: "priority", height: 22, map_to: "priority", type: "select", options: priorities },
-      { name: "time", height: 72, type: "duration", map_to: "auto" }
-    ];
+
+    // var owners = [
+    //   { key: "", label: "" },
+
+    // ];
+    console.log("Пользователь");
+    console.log(window.localStorage.getItem("userId"));
+    ApiService.fetchResourcesToDropDown(4)
+      .then((res) => {
+        var owners = res.data.result;
+        var priorities = [
+          { key: "Низкий", label: "Низкий" },
+          { key: "Средний", label: "Средний" },
+          { key: "Высокий", label: "Высокий" }
+        ];
+        gantt.config.lightbox.sections = [
+          { name: "description", height: 38, map_to: "text", type: "textarea", focus: true },
+          { name: "owner", height: 22, map_to: "owner", type: "select", options: owners },
+          { name: "priority", height: 22, map_to: "priority", type: "select", options: priorities },
+          { name: "time", height: 72, type: "duration", map_to: "auto" }
+        ];
+      });
+
     gantt.locale.labels.section_owner = "Исполнитель";
     gantt.locale.labels.section_priority = "Приоритет";
     gantt.ext.zoom.init({

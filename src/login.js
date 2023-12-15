@@ -45,9 +45,8 @@ const Login = (props) => {
                     setPasswordError("Неверный пароль")
                     setEmailError("Неверный email")
                 } else{
-                    console.log(res.data.id)
+                    window.localStorage.setItem("userId", res.data);
                     navigate("/gantt")
-                    console.log(res.data.id)
                 }
                 // this.props.history('/edit-resource');
             })

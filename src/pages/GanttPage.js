@@ -26,20 +26,9 @@ class GanttPage extends Component {
     console.log("Гружу данные")
     {
       axios({
-
-        // Endpoint to send files
-        url: "http://localhost:8080/charts",
+        url: "http://localhost:8080/gantt",
         method: "GET",
-        // headers: {
-
-        //     // Add any auth token here
-        //    // authorization: "your token comes here",
-        // },
-
       })
-
-        // Handle the response from backend here
-        // .then((res) => {console.log(res) })
         .then((res) => {
           console.log("Данные загрузил");
           console.log(this.state);
@@ -47,10 +36,6 @@ class GanttPage extends Component {
           gantt.parse(res.data);
           console.log(this.state);
         })
-
-
-
-        // Catch errors if any
         .catch((err) => { });
     }
   }
@@ -88,19 +73,30 @@ class GanttPage extends Component {
     this.loadData();
   }
   saveGantt() {
-   // this.state.data;
+    // this.state.data;
     console.log('сохраняю гант');
-    console.log(gantt.getTaskByTime());
-    console.log(gantt.getLinks());
+    // const ganttToBack = {
+    //   data: gantt.getTaskByTime(),
+    //   links: gantt.getLinks(),
+    //   userId: 123
+    // }
+    // console.log(ganttToBack);
+    axios.post('http://localhost:8080/gantt', {
+      data: gantt.getTaskByTime(),
+      links: gantt.getLinks(),
+      userId: 123
+  })
+    // console.log(gantt.getTaskByTime());
+    // console.log(gantt.getLinks());
     //console.log(data);
     //this.state.data  отправить на сервер
   }
   // taskSave(task) {
   //   console.log('сохраняю таск');
-    
+
   //   //обновить this.state.data 
   // }
-  
+
   render() {
     // const { currentZoom, messages, data } = this.state;
     const { currentZoom, data } = this.state;
@@ -121,7 +117,7 @@ class GanttPage extends Component {
             tasks={data}
             zoom={currentZoom}
             onDataUpdated={this.logDataUpdate}
-           // onTaskSave={this.taskSave}
+          // onTaskSave={this.taskSave}
           />
         </div>
         {/* <MessageArea
