@@ -90,14 +90,16 @@ class GanttPage extends Component {
   saveGantt() {
    // this.state.data;
     console.log('сохраняю гант');
+    console.log(gantt.getTaskByTime());
+    console.log(gantt.getLinks());
     //console.log(data);
     //this.state.data  отправить на сервер
   }
-  taskSave(task) {
-    console.log('сохраняю таск');
-    console.log(task);
-    //обновить this.state.data 
-  }
+  // taskSave(task) {
+  //   console.log('сохраняю таск');
+    
+  //   //обновить this.state.data 
+  // }
   
   render() {
     // const { currentZoom, messages, data } = this.state;
@@ -119,7 +121,7 @@ class GanttPage extends Component {
             tasks={data}
             zoom={currentZoom}
             onDataUpdated={this.logDataUpdate}
-            onTaskSave={this.taskSave}
+           // onTaskSave={this.taskSave}
           />
         </div>
         {/* <MessageArea

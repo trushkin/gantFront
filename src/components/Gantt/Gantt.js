@@ -22,9 +22,9 @@ export default class Gantt extends Component {
       { name: "add", width: 44 }
     ]
     var owners = [
-      { key: "Василий", label: "Василий" },
-      { key: "Петр", label: "Петр" },
-      { key: "Ирина", label: "Ирина" }
+      { key: "1", label: "Василий1" },
+      { key: "2", label: "Петр" },
+      { key: "3", label: "Ирина" }
     ];
     var priorities = [
       { key: "Низкий", label: "Низкий" },
@@ -105,20 +105,21 @@ export default class Gantt extends Component {
 
   componentDidMount() {
     gantt.config.date_format = "%Y-%m-%d %H:%i";
-    const { tasks, onTaskSave } = this.props;
+    const { tasks } = this.props;
+    // const { tasks, onTaskSave } = this.props;
     gantt.init(this.ganttContainer);
     this.initGanttDataProcessor();
-    var inlineEditors = gantt.ext.inlineEditors;
+    // var inlineEditors = gantt.ext.inlineEditors;
 
-    inlineEditors.attachEvent("onSave", function (state) {
-      console.log(state);
-      onTaskSave(state);
-      // -> { id: itemId, 
-      //      columnName: columnName, 
-      //      oldValue: value, 
-      //      newValue: value
-      //    };
-    });
+    // inlineEditors.attachEvent("onSave", function (state) {
+    //   console.log(state);
+    //   onTaskSave(state);
+    //   // -> { id: itemId, 
+    //   //      columnName: columnName, 
+    //   //      oldValue: value, 
+    //   //      newValue: value
+    //   //    };
+    // });
     gantt.parse(tasks);
   }
 
