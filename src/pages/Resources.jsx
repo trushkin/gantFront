@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useNavigate } from 'react-router-dom';
 // import ApiService from "../../service/ApiService";
 import ApiService from "./ApiService";
 import Table from '@material-ui/core/Table';
@@ -48,12 +49,13 @@ class ListResourcesComponent extends Component {
 
     editResource(id) {
         window.localStorage.setItem("resourceId", id);
-        this.props.history.push('/edit-resource');
+        this.props.history('/edit-resource');
     }
 
     addResource() {
         window.localStorage.removeItem("resourceId");
-        this.props.history.push('/add-resource');
+
+        this.props.history('/add-resource');
 
     }
 
@@ -114,5 +116,6 @@ const style = {
     display: 'flex',
     justifyContent: 'center'
 }
-
-export default ListResourcesComponent;
+export default (props) => (
+    <ListResourcesComponent history={useNavigate()} />
+  );

@@ -105,9 +105,20 @@ export default class Gantt extends Component {
 
   componentDidMount() {
     gantt.config.date_format = "%Y-%m-%d %H:%i";
-    const { tasks } = this.props;
+    const { tasks, onTaskSave } = this.props;
     gantt.init(this.ganttContainer);
     this.initGanttDataProcessor();
+    var inlineEditors = gantt.ext.inlineEditors;
+
+    inlineEditors.attachEvent("onSave", function (state) {
+      console.log(state);
+      onTaskSave(state);
+      // -> { id: itemId, 
+      //      columnName: columnName, 
+      //      oldValue: value, 
+      //      newValue: value
+      //    };
+    });
     gantt.parse(tasks);
   }
 

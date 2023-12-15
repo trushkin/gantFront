@@ -55,6 +55,7 @@ class GanttPage extends Component {
     }
   }
 
+
   addMessage(message) {
     const maxLogLength = 5;
     const newMessage = { message };
@@ -86,7 +87,15 @@ class GanttPage extends Component {
   componentDidMount() {
     this.loadData();
   }
-
+  saveGantt(){
+      console.log('сохраняю гант');
+      //this.state.data  отправить на сервер
+  }
+  taskSave(task){
+    console.log('сохраняю таск');
+    console.log(task);
+    //обновить this.state.data 
+  }
   render() {
     // const { currentZoom, messages, data } = this.state;
     const { currentZoom, data } = this.state;
@@ -98,6 +107,7 @@ class GanttPage extends Component {
           <Toolbar
             zoom={currentZoom}
             onZoomChange={this.handleZoomChange}
+            saveGantt={this.saveGantt}
           />
 
         </div>
@@ -106,7 +116,7 @@ class GanttPage extends Component {
             tasks={data}
             zoom={currentZoom}
             onDataUpdated={this.logDataUpdate}
-
+            onTaskSave={this.taskSave}
           />
         </div>
         {/* <MessageArea

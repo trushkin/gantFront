@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
 export default class Toolbar extends Component {
   handleZoomChange = (e) => {
     if (this.props.onZoomChange) {
@@ -26,6 +27,9 @@ export default class Toolbar extends Component {
         <div className="tool-bar">
           <b>Масштаб: </b>
           {zoomRadios}
+          <Button variant="contained" color="primary" onClick={() => this.props.saveGantt()}>
+            Сохранить
+          </Button>
         </div>
       </div>
     );

@@ -17,7 +17,7 @@ class ApiService {
     }
 
     addResource(resource) {
-        return axios.post(""+RESOURCE_API_BASE_URL, resource);
+        return axios.post("" + RESOURCE_API_BASE_URL, resource);
     }
 
     editResource(resource) {
