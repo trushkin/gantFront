@@ -30,7 +30,7 @@ const Login = (props) => {
             setPasswordError("Пожалуйста, введите пароль")
             return
         }
-
+//window.localStorage.clear()
         if (password.length < 7) {
             setPasswordError("Пароль должен содержать не менее 7 символов")
             return
@@ -58,10 +58,13 @@ const Login = (props) => {
 
         //     })
         // navigate("/gantt")
+        //   {window.location.reload()}
     }
 
     return <div className={"mainContainer"}>
         <div className={"titleContainer"}>
+            {window.localStorage.clear()}
+          
             <div>Вход в систему</div>
         </div>
         <br />

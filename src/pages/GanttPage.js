@@ -6,13 +6,22 @@ import Toolbar from '../components/Toolbar';
 import axios from "axios";
 import { gantt } from 'dhtmlx-gantt';
 
+// const dataDefault = {
+//   data: [
+//     { id: 1, text: 'client', start_date: '2023-11-22', priority: 'Высокий', owner: 'Алеся', duration: 2, progress: 0.6 },
+//     { id: 2, text: 'client', start_date: '2023-11-25', priority: 'Средний', owner: 'Алеся', duration: 3, progress: 0.4 }
+//   ],
+//   links: [
+//     { id: 1, source: 1, target: 2, type: '0' }
+//   ]
+// };
 const dataDefault = {
   data: [
-    { id: 1, text: 'Задача #1', start_date: '2023-11-22', priority: 'Высокий', owner: 'Василий', duration: 2, progress: 0.6 },
-    { id: 2, text: 'Задача #2', start_date: '2023-11-25', priority: 'Средний', owner: 'Петр', duration: 3, progress: 0.4 }
+    // { id: 1, text: 'client', start_date: '2023-11-22', priority: 'Высокий', owner: 'Алеся', duration: 2, progress: 0.6 },
+    // { id: 2, text: 'client', start_date: '2023-11-25', priority: 'Средний', owner: 'Алеся', duration: 3, progress: 0.4 }
   ],
   links: [
-    { id: 1, source: 1, target: 2, type: '0' }
+    // { id: 1, source: 1, target: 2, type: '0' }
   ]
 };
 class GanttPage extends Component {
@@ -23,21 +32,29 @@ class GanttPage extends Component {
   };
 
   loadData(e) {
-    console.log("Гружу данные")
-    {
-      axios({
-        url: "http://localhost:8080/gantt",
-        method: "GET",
-      })
-        .then((res) => {
-          console.log("Данные загрузил");
-          console.log(this.state);
-          this.setState({ ...this.state, data: res.data });
-          gantt.parse(res.data);
-          console.log(this.state);
-        })
-        .catch((err) => { });
+    //window.location.reload();
+    if (!window.localStorage.getItem("reload")) {
+      /* set reload locally and then reload the page */
+      window.localStorage.setItem("reload", "true");
+      window.location.reload();
     }
+    else {
+      window.localStorage.removeItem("reload");
+      // localStorage.clear(); // an option
+    }
+    console.log("Гружу данные")
+    const userId = window.localStorage.getItem("userId")
+    gantt.clearAll();
+    axios.get('http://localhost:8080/gantt/' + userId)
+      .then((res) => {
+        console.log("Данные загрузил");
+        // this.setState({ ...this.state, data: null });
+        this.setState({ ...this.state, data: res.data });
+        gantt.parse(res.data);
+        console.log(this.state);
+      })
+      .catch((err) => { });
+
   }
 
 
@@ -70,32 +87,18 @@ class GanttPage extends Component {
     });
   }
   componentDidMount() {
+    gantt.refreshData();
     this.loadData();
   }
   saveGantt() {
-    // this.state.data;
     console.log('сохраняю гант');
-    // const ganttToBack = {
-    //   data: gantt.getTaskByTime(),
-    //   links: gantt.getLinks(),
-    //   userId: 123
-    // }
-    // console.log(ganttToBack);
     axios.post('http://localhost:8080/gantt', {
       data: gantt.getTaskByTime(),
       links: gantt.getLinks(),
-      userId: 123
-  })
-    // console.log(gantt.getTaskByTime());
-    // console.log(gantt.getLinks());
-    //console.log(data);
-    //this.state.data  отправить на сервер
+      userId: window.localStorage.getItem("userId")
+    })
   }
-  // taskSave(task) {
-  //   console.log('сохраняю таск');
 
-  //   //обновить this.state.data 
-  // }
 
   render() {
     // const { currentZoom, messages, data } = this.state;
@@ -129,4 +132,5 @@ class GanttPage extends Component {
 }
 
 export default GanttPage;
+
 

@@ -28,7 +28,7 @@ class ListResourcesComponent extends Component {
     }
 
     componentDidMount() {
-        this.reloadResourceList(4);
+        this.reloadResourceList(window.localStorage.getItem("userId"));
     }
 
     reloadResourceList(userId) {

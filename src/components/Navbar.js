@@ -38,7 +38,7 @@ function Navbar() {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
-        <AppBar position="static"style={{ backgroundColor: "#3db9d3" }} className={classes.appBar}>
+        <AppBar position="static" style={{ backgroundColor: "#3db9d3" }} className={classes.appBar}>
 
             <CssBaseline />
             <Toolbar>
@@ -51,12 +51,17 @@ function Navbar() {
                     <DrawerComponent />
                 ) : (
                     <div className={classes.navlinks}>
-                        <Link to="/gantt" className={classes.link}>
-                            Диаграмма Ганта
-                        </Link>
-                        <Link to="/resources" className={classes.link}>
-                            Исполнители
-                        </Link>
+                        {window.localStorage.getItem("userId") !== null && (
+                            <>
+                                <Link to="/gantt" className={classes.link}>
+                                    Диаграмма Ганта
+                                </Link>
+                                <Link to="/resources" className={classes.link}>
+                                    Исполнители
+                                </Link>
+                                
+                            </>
+                        )}
                     </div>
                 )}
             </Toolbar>

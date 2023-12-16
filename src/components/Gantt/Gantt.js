@@ -28,7 +28,7 @@ export default class Gantt extends Component {
     // ];
     console.log("Пользователь");
     console.log(window.localStorage.getItem("userId"));
-    ApiService.fetchResourcesToDropDown(4)
+    ApiService.fetchResourcesToDropDown(window.localStorage.getItem("userId"))
       .then((res) => {
         var owners = res.data.result;
         var priorities = [
