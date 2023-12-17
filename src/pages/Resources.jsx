@@ -28,6 +28,13 @@ class ListResourcesComponent extends Component {
     }
 
     componentDidMount() {
+        if (!window.localStorage.getItem("reload")) {
+            window.localStorage.setItem("reload", "true");
+            window.location.reload();
+          }
+          else {
+            window.localStorage.removeItem("reload");
+          }
         this.reloadResourceList(window.localStorage.getItem("userId"));
     }
     
@@ -87,10 +94,10 @@ class ListResourcesComponent extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Имя</TableCell>
-                            <TableCell align="center">Ёмкость</TableCell>
-                            <TableCell align="center">Занятость</TableCell>
-                            <TableCell align="center">Стоимость в день</TableCell>
-                            <TableCell align="center">Общая стоимость</TableCell>
+                            <TableCell align="center">Ёмкость, дни</TableCell>
+                            <TableCell align="center">Занятость, дни</TableCell>
+                            <TableCell align="center">Стоимость в день, р.</TableCell>
+                            <TableCell align="center">Общая стоимость, р.</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -99,7 +106,7 @@ class ListResourcesComponent extends Component {
                             <TableRow key={row.id}>
                                 <TableCell align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.capacity}</TableCell>
-                                <TableCell align="center">{row.occupancy}</TableCell>
+                                <TableCell align="center" style={{ backgroundColor: row.occupancy > row.capacity ? 'red' : 'default' }}>{row.occupancy}</TableCell>
                                 <TableCell align="center">{row.salary}</TableCell>
                                 <TableCell align="center">{row.totalCost}</TableCell>
                                 <TableCell align="center" onClick={() => this.editResource(row.id)}><CreateIcon /></TableCell>

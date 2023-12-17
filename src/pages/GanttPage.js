@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import Gantt from '../components/Gantt';
 import Toolbar from '../components/Toolbar';
-// import MessageArea from './components/MessageArea';
-//import '../App.css';
 import axios from "axios";
 import { gantt } from 'dhtmlx-gantt';
 
-// const dataDefault = {
-//   data: [
-//     { id: 1, text: 'client', start_date: '2023-11-22', priority: 'Высокий', owner: 'Алеся', duration: 2, progress: 0.6 },
-//     { id: 2, text: 'client', start_date: '2023-11-25', priority: 'Средний', owner: 'Алеся', duration: 3, progress: 0.4 }
-//   ],
-//   links: [
-//     { id: 1, source: 1, target: 2, type: '0' }
-//   ]
-// };
 const dataDefault = {
   data: [
     // { id: 1, text: 'client', start_date: '2023-11-22', priority: 'Высокий', owner: 'Алеся', duration: 2, progress: 0.6 },
@@ -32,15 +21,12 @@ class GanttPage extends Component {
   };
 
   loadData(e) {
-    //window.location.reload();
     if (!window.localStorage.getItem("reload")) {
-      /* set reload locally and then reload the page */
       window.localStorage.setItem("reload", "true");
       window.location.reload();
     }
     else {
       window.localStorage.removeItem("reload");
-      // localStorage.clear(); // an option
     }
     console.log("Гружу данные")
     const userId = window.localStorage.getItem("userId")
@@ -92,6 +78,7 @@ class GanttPage extends Component {
   }
   componentWillUnmount(){
     console.log("сохраняю гант при переходе на исполнители");
+    gantt.refreshData();
     this.saveGantt();
 }
   saveGantt() {
@@ -103,7 +90,27 @@ class GanttPage extends Component {
     })
   }
 
-
+  export(){
+    gantt.plugins({
+      export_api: true
+  });
+    console.log("export")
+    gantt.exportToExcel({
+      name:"document.xlsx", 
+      columns:[
+          { id:"text",  header:"Название", width:150 },
+          { id:"start_date",  header:"Дата начала", width:250, type:"date" }
+      ],
+      server:"http://localhost:3000",
+      callback: function(res){
+          alert(res.url);
+      },
+      visual:true,
+      cellColors:true,
+      data:{},
+      date_format: "dddd d, mmmm yyyy"
+  });
+  }
   render() {
     // const { currentZoom, messages, data } = this.state;
     const { currentZoom, data } = this.state;
@@ -116,6 +123,7 @@ class GanttPage extends Component {
             zoom={currentZoom}
             onZoomChange={this.handleZoomChange}
             saveGantt={this.saveGantt}
+           // exportToExcel={this.export}
           />
 
         </div>

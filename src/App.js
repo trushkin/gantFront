@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Resources from './pages/Resources';
 import AddResource from './pages/AddResource';
 import EditResource from './pages/EditResource';
+import Report from './pages/Report';
 import { Switch } from '@material-ui/core';
 function App() {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/add-resource" element={<AddResource />} />
                     <Route path="/edit-resource" element={<EditResource />} />
+                    <Route path="/report" element={<Report />} />
                 </Routes>
                 {/* </Switch> */}
             </BrowserRouter>

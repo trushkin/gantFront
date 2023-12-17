@@ -23,15 +23,21 @@ export default class Toolbar extends Component {
     });
 
     return (
+      <div className="tool-bar" style={{ display: 'flex', alignItems: 'center' }}>
       <div>
-        <div className="tool-bar">
-          <b>Масштаб: </b>
-          {zoomRadios}
-          <Button variant="contained" color="primary" onClick={() => this.props.saveGantt()}>
-            Сохранить
-          </Button>
-        </div>
+        <b>Масштаб: </b>
+        {zoomRadios}
       </div>
+      <div style={{ marginLeft: 'auto' }}>
+      {/* <Button variant="contained" color="primary" onClick={() => this.props.exportToExcel()}>
+          Экспорт в Excel
+        </Button> */}
+        <Button variant="contained" color="primary" onClick={() => this.props.saveGantt()}>
+          Сохранить
+        </Button>
+      </div>
+    </div>
     );
+    
   }
 }

@@ -59,6 +59,9 @@ function Navbar() {
                                 <Link to="/resources" className={classes.link}>
                                     Исполнители
                                 </Link>
+                                <Link to="/report" className={classes.link}>
+                                    Статистика
+                                </Link>
                                 
                             </>
                         )}

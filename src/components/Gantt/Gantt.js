@@ -21,7 +21,7 @@ export default class Gantt extends Component {
       },
       { name: "add", width: 44 }
     ]
-
+    
     // var owners = [
     //   { key: "", label: "" },
 

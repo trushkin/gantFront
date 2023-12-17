@@ -14,7 +14,7 @@ const Login = (props) => {
     const onButtonClick = () => {
         setEmailError("")
         setPasswordError("")
-
+      
         // Check if the user has entered both fields correctly
         if ("" === email) {
             setEmailError("Пожалуйста, введите email")
