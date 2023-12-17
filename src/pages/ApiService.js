@@ -8,8 +8,8 @@ class ApiService {
         return axios.get(RESOURCE_API_BASE_URL + '/' + userId);
     }
 
-    fetchResourcesById(resourceId) {
-        return axios.get(RESOURCE_API_BASE_URL + '/' + resourceId);
+    fetchResourceById(resourceId) {
+        return axios.get(RESOURCE_API_BASE_URL + '/get-one/' + resourceId);
     }
     fetchResourcesToDropDown(userId){
         return axios.get(RESOURCE_API_BASE_URL + '/resource-dropdown/' + userId);
@@ -19,8 +19,8 @@ class ApiService {
         return axios.delete(RESOURCE_API_BASE_URL + '/' + resourceId);
     }
 
-    addResource(resource) {
-        return axios.post("" + RESOURCE_API_BASE_URL, resource);
+    addResource(resource, userId) {
+        return axios.post("" + RESOURCE_API_BASE_URL + '/' + userId, resource);
     }
 
     editResource(resource) {

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router-dom';
 
 class EditResourceComponent extends Component {
 
@@ -16,41 +17,40 @@ class EditResourceComponent extends Component {
             salary: '',
             message: null
         }
-        // this.saveResource = this.saveResource.bind(this);
-        // this.loadResource = this.loadResource.bind(this);
+        this.saveResource = this.saveResource.bind(this);
+        this.loadResource = this.loadResource.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.loadResource();
-    // }
+    componentDidMount() {
+        this.loadResource();
+    }
 
-    // loadResource() {
-    //     ApiService.fetchResourceById(window.localStorage.getItem("resourceId"))
-    //         .then((res) => {
-    //             let resource = res.data.result;
-    //             this.setState({
-    //                 id: resource.id,
-    //                 name: resource.name,
-    //                 capacity: resource.capacity,
-    //                 lastName: resource.lastName,
-    //                 age: resource.age,
-    //                 salary: resource.salary,
-    //             })
-    //         });
-    // }
+    loadResource() {
+        ApiService.fetchResourceById(window.localStorage.getItem("resourceId"))
+            .then((res) => {
+                let resource = res.data.result;
+                this.setState({
+                    id: resource.id,
+                    name: resource.name,
+                    capacity: resource.capacity,
+                    salary: resource.salary,
+                })
+            });
+    }
 
     onChange = (e) =>
         this.setState({ [e.target.name]: e.target.value });
 
-    // saveUser = (e) => {
-    //     e.preventDefault();
-    //     let user = { id: this.state.id, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary };
-    //     ApiService.editUser(user)
-    //         .then(res => {
-    //             this.setState({ message: 'User added successfully.' });
-    //             this.props.history.push('/users');
-    //         });
-    // }
+        saveResource = (e) => {
+            e.preventDefault();
+            let resource = {id: this.state.id, name: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
+            console.log(resource);
+            ApiService.editResource(resource, window.localStorage.getItem("userId"))
+                .then(res => {
+                    this.setState({ message: 'Resource added successfully.' });
+                    this.props.history('/resources');
+                });
+        }
 
     render() {
         return (
@@ -65,7 +65,7 @@ class EditResourceComponent extends Component {
 
                         <TextField type="number" placeholder="Стоимость в день" fullWidth margin="normal" name="salary" inputProps={{ min: 0 }} value={this.state.salary} onChange={this.onChange} />
 
-                        <Button variant="contained" color="primary" onClick={this.saveUser}>Сохранить</Button>
+                        <Button variant="contained" color="primary" onClick={this.saveResource}>Сохранить</Button>
 
                     </form>
                 </ThemeProvider>
@@ -91,4 +91,6 @@ const containerStyle = {
     margin: '50px auto 0',
 };
 
-export default EditResourceComponent;
+export default (props) => (
+    <EditResourceComponent history={useNavigate()} />
+  );

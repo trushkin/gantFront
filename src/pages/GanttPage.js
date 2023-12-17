@@ -90,6 +90,10 @@ class GanttPage extends Component {
     gantt.refreshData();
     this.loadData();
   }
+  componentWillUnmount(){
+    console.log("сохраняю гант при переходе на исполнители");
+    this.saveGantt();
+}
   saveGantt() {
     console.log('сохраняю гант');
     axios.post('http://localhost:8080/gantt', {

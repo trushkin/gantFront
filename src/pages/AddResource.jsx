@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router-dom';
 
 class AddResourceComponent extends Component {
 
@@ -20,11 +21,12 @@ class AddResourceComponent extends Component {
 
     saveResource = (e) => {
         e.preventDefault();
-        let resource = { username: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
-        ApiService.addResource(resource)
+        let resource = { name: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
+        console.log(resource);
+        ApiService.addResource(resource, window.localStorage.getItem("userId"))
             .then(res => {
                 this.setState({ message: 'Resource added successfully.' });
-                this.props.history.push('/resources');
+                this.props.history('/resources');
             });
     }
 
@@ -73,4 +75,6 @@ const containerStyle = {
     margin: '50px auto 0',
 };
 
-export default AddResourceComponent;
+export default (props) => (
+    <AddResourceComponent history={useNavigate()} />
+  );

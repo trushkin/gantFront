@@ -13,7 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 class ListResourcesComponent extends Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
@@ -30,7 +30,8 @@ class ListResourcesComponent extends Component {
     componentDidMount() {
         this.reloadResourceList(window.localStorage.getItem("userId"));
     }
-
+    
+    
     reloadResourceList(userId) {
         ApiService.fetchResources(userId)
             .then((res) => {
@@ -40,10 +41,18 @@ class ListResourcesComponent extends Component {
     }
 
     deleteResource(resourceId) {
+
         ApiService.deleteResource(resourceId)
             .then(res => {
-                this.setState({ message: 'Resource deleted successfully.' });
-                this.setState({ resources: this.state.resources.filter(resource => resource.id !== resourceId) });
+                if (res.data === -1) {
+                    alert('Удаление невозможно! Исполнитель назначен на одну или более задач');
+                } else {
+                    this.setState({ message: 'Resource deleted successfully.' });
+                    window.location.reload();
+                }
+
+
+                //this.setState({ resources: this.state.resources.filter(resource => resource.id !== resourceId) });
             })
     }
 
@@ -84,6 +93,7 @@ class ListResourcesComponent extends Component {
                             <TableCell align="center">Общая стоимость</TableCell>
                         </TableRow>
                     </TableHead>
+
                     <TableBody>
                         {this.state.resources?.map(row => (
                             <TableRow key={row.id}>
@@ -119,4 +129,4 @@ const style = {
 }
 export default (props) => (
     <ListResourcesComponent history={useNavigate()} />
-  );
+);
