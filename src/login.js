@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import axios from "axios";
+import UserService from "./services/UserService";
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
@@ -12,6 +13,7 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     const onButtonClick = () => {
+        UserService.doLogin();
         setEmailError("")
         setPasswordError("")
       

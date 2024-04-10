@@ -1,0 +1,9 @@
+{
+    "realm": "education",
+    "auth-server-url": "http://localhost:18080/",
+    "ssl-required": "external",
+    "clientId": "planning-system-js-client",
+    "resource": "planning-system-js-client",
+    "public-client": true,
+    "confidential-port": 0
+  }
