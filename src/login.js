@@ -13,7 +13,8 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     const onButtonClick = () => {
-        UserService.doLogin();
+        // UserService.doLogin();
+        // UserService.getToken();
         setEmailError("")
         setPasswordError("")
       
