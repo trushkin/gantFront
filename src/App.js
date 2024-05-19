@@ -20,7 +20,7 @@ function App() {
                 <Navbar />
                 {/* <Switch>  */}
                 <Routes>
-                    <Route path="/" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+                    <Route path="/" element={<GanttPage />} />
                     <Route path="/gantt" element={<GanttPage />} />
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/add-resource" element={<AddResource />} />

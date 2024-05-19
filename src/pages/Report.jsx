@@ -11,7 +11,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import axios from 'axios';
+import HttpService from '../services/HttpService';
 class ReportComponent extends Component {
     constructor(props) {
         super(props)
@@ -28,10 +28,10 @@ class ReportComponent extends Component {
         else {
             window.localStorage.removeItem("reload");
         }
-        this.getReport(window.localStorage.getItem("userId"));
+        this.getReport();
     }
-    getReport(userId) {
-        axios.get('http://localhost:8080/report/' + userId)
+    getReport() {
+        HttpService.getAxiosClient().get('http://localhost:8080/report')
         .then((res) => {
             this.setState({ report: res.data })  
         })

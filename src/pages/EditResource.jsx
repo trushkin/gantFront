@@ -45,7 +45,7 @@ class EditResourceComponent extends Component {
             e.preventDefault();
             let resource = {id: this.state.id, name: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
             console.log(resource);
-            ApiService.editResource(resource, window.localStorage.getItem("userId"))
+            ApiService.editResource(resource)
                 .then(res => {
                     this.setState({ message: 'Resource added successfully.' });
                     this.props.history('/resources');

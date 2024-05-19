@@ -24,24 +24,25 @@ class ListResourcesComponent extends Component {
         this.deleteResource = this.deleteResource.bind(this);
         this.editResource = this.editResource.bind(this);
         this.addResource = this.addResource.bind(this);
-        //this.reloadResourceList = this.reloadResourceList.bind(this);
+        this.reloadResourceList = this.reloadResourceList.bind(this);
     }
 
     componentDidMount() { // в api сделан тестовый метод на проверку того, как токен долетает на бэк
-        // if (!window.localStorage.getItem("reload")) {
-        //     window.localStorage.setItem("reload", "true");
-        //     window.location.reload();
-        //   }
-        //   else {
-        //     window.localStorage.removeItem("reload");
-        //   }
-        // this.reloadResourceList(window.localStorage.getItem("userId"));
-        ApiService.testFetchResoureces();
+        if (!window.localStorage.getItem("reload")) {
+            window.localStorage.setItem("reload", "true");
+            window.location.reload();
+          }
+          else {
+            window.localStorage.removeItem("reload");
+          }
+        this.reloadResourceList();
+       // this.reloadResourceList(window.localStorage.getItem("userId"));
+       // ApiService.testFetchResoureces();
     }
     
     
-    reloadResourceList(userId) {
-        ApiService.fetchResources(userId)
+    reloadResourceList() {
+        ApiService.fetchResources()
             .then((res) => {
                 this.setState({ resources: res.data.result, message: res.data.message })
                 //this.setState({resources: res.data.result}) //на бэке api service, где собирается JSON

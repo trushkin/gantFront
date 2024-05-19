@@ -5,26 +5,26 @@ const RESOURCE_API_BASE_URL = 'http://localhost:8080/resources';
 
 class ApiService {
 
-    testFetchResoureces(){
+    // testFetchResoureces(){
+    //     return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL);
+    // }
+    fetchResources() {
         return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL);
-    }
-    fetchResources(userId) {
-        return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL + '/' + userId);
     }
 
     fetchResourceById(resourceId) {
         return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL + '/get-one/' + resourceId);
     }
-    fetchResourcesToDropDown(userId){
-        return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL + '/resource-dropdown/' + userId);
+    fetchResourcesToDropDown(){
+        return HttpService.getAxiosClient().get(RESOURCE_API_BASE_URL + '/resource-dropdown');
     }
 
     deleteResource(resourceId) {
         return HttpService.getAxiosClient().delete(RESOURCE_API_BASE_URL + '/' + resourceId);
     }
 
-    addResource(resource, userId) {
-        return HttpService.getAxiosClient().post("" + RESOURCE_API_BASE_URL + '/' + userId, resource);
+    addResource(resource) {
+        return HttpService.getAxiosClient().post(RESOURCE_API_BASE_URL + '/' + resource);
     }
 
     editResource(resource) {

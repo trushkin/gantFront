@@ -23,7 +23,7 @@ class AddResourceComponent extends Component {
         e.preventDefault();
         let resource = { name: this.state.name, capacity: this.state.capacity, salary: this.state.salary};
         console.log(resource);
-        ApiService.addResource(resource, window.localStorage.getItem("userId"))
+        ApiService.addResource(resource)
             .then(res => {
                 this.setState({ message: 'Resource added successfully.' });
                 this.props.history('/resources');

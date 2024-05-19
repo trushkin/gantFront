@@ -1,4 +1,5 @@
 import React from "react";
+import UserService from "../services/UserService";
 import {
     AppBar,
     Toolbar,
@@ -36,7 +37,10 @@ function Navbar() {
     const classes = useStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+    const handleLogout = () => {
+        UserService.doLogout();
+       // navigate('/login'); // или любая другая страница после logout
+    };
     return (
         <AppBar position="static" style={{ backgroundColor: "#3db9d3" }} className={classes.appBar}>
 
@@ -51,7 +55,7 @@ function Navbar() {
                     <DrawerComponent />
                 ) : (
                     <div className={classes.navlinks}>
-                        {window.localStorage.getItem("userId") !== null && (
+                        {UserService.isLoggedIn && (
                             <>
                                 <Link to="/gantt" className={classes.link}>
                                     Диаграмма Ганта
@@ -62,7 +66,10 @@ function Navbar() {
                                 <Link to="/report" className={classes.link}>
                                     Статистика
                                 </Link>
-                                
+                                <button onClick={handleLogout} className={classes.link} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'inherit' }}>
+                                    Выйти
+                                </button>
+
                             </>
                         )}
                     </div>

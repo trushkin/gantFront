@@ -3,6 +3,7 @@ import Gantt from '../components/Gantt';
 import Toolbar from '../components/Toolbar';
 import axios from "axios";
 import { gantt } from 'dhtmlx-gantt';
+import HttpService from '../services/HttpService';
 
 const dataDefault = {
   data: [
@@ -29,9 +30,8 @@ class GanttPage extends Component {
       window.localStorage.removeItem("reload");
     }
     console.log("Гружу данные")
-    const userId = window.localStorage.getItem("userId")
     gantt.clearAll();
-    axios.get('http://localhost:8080/gantt/' + userId)
+    HttpService.getAxiosClient().get('http://localhost:8080/gantt')
       .then((res) => {
         console.log("Данные загрузил");
         // this.setState({ ...this.state, data: null });
@@ -83,10 +83,9 @@ class GanttPage extends Component {
 }
   saveGantt() {
     console.log('сохраняю гант');
-    axios.post('http://localhost:8080/gantt', {
+    HttpService.getAxiosClient().post('http://localhost:8080/gantt', {
       data: gantt.getTaskByTime(),
-      links: gantt.getLinks(),
-      userId: window.localStorage.getItem("userId")
+      links: gantt.getLinks()
     })
   }
 
